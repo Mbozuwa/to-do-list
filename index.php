@@ -1,12 +1,42 @@
 <?php
-include('adodb5/adodb.inc.php');
+	$db = mysqli_connect('localhost', 'root', '', 'todo');
 
-session_start();
+	if (isset($_POST['submit'])) {
+		$task = $_POST['task'];
 
-$_SESSION['user_id'] = 1;
+		mysql_query($db, "INSERT INTO tasks (task) VALUES ('$task')");
+		header('location: index.php'); 
+	}
+?>
 
-$db = new PDO('mysql:dbname=todo;host=localhost', 'root', '');
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo list</title>
+</head>
+<body>
+	<div class="header">
+		<h1>To do list application</h1>
+	</div>
 
-if (!isset == $_SESSION['user_id'] = 1{
-	die("You are not logged in yet.");
-}
+	<form method="POST" action="index.php">
+		<input type="text" name="task">
+		<button type="submit" name="submit">Add your task here</button>
+	</form>
+
+	<table>
+		<thead>
+			<th>N</th>
+			<th>Task</th>
+			<th>Action</th>
+		</thead>
+		<tbody>
+			<td>1</td>
+			<td class="task">The first placeholder</td>
+			<td class="delete">
+				<a href="#">X</a>
+			</td>
+		</tbody>
+	</table>
+</body>
+</html>
