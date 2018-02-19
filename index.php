@@ -4,6 +4,7 @@
 	if (isset($_POST['submit'])) {
 		$task = $_POST['task'];
 
+		$query = "SELECT * FROM tasks WHERE task = '$task'";
 		mysql_query($db, "INSERT INTO tasks (task) VALUES ('$task')");
 		header('location: index.php'); 
 	}
@@ -16,7 +17,7 @@
 </head>
 <body>
 	<div class="header">
-		<h1>To do list application</h1>
+		<h1>To do list </h1>
 	</div>
 
 	<form method="POST" action="index.php">
