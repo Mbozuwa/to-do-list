@@ -4,10 +4,13 @@
 	if (isset($_POST['submit'])) {
 		$task = $_POST['task'];
 
-		$query = "SELECT * FROM tasks WHERE task = '$task'";
-		mysql_query($db, "INSERT INTO tasks (task) VALUES ('$task')");
+		$allData = "INSERT INTO tasks (task) VALUES ('$task')";
+
+		mysqli_query($db, $allData);
 		header('location: index.php'); 
 	}
+
+	$tasks = "SELECT * FROM tasks";
 ?>
 
 <!DOCTYPE html>
@@ -22,21 +25,24 @@
 
 	<form method="POST" action="index.php">
 		<input type="text" name="task">
-		<button type="submit" name="submit">Add your task here</button>
+		<button type="submit" name="submit">Toevoegen</button>
 	</form>
 
 	<table>
 		<thead>
-			<th>N</th>
-			<th>Task</th>
-			<th>Action</th>
+			<th>Nummer</th>
+			<th>Taak</th>
+			<th>Actie</th>
 		</thead>
 		<tbody>
-			<td>1</td>
-			<td class="task">The first placeholder</td>
-			<td class="delete">
-				<a href="#">X</a>
-			</td>
+		<?php  while ($row = mysqli_query($db, $tasks)) { ?>
+			<tr>
+				<td><?php echo $row['id']; ?></td>
+				<td class="task"><?php echo $row['task']; ?></td>
+				<td class="delete">
+				<a href="#">X</a></td>
+			</tr>	
+		<?php  } ?>	
 		</tbody>
 	</table>
 </body>
