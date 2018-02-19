@@ -10,7 +10,8 @@
 		header('location: index.php'); 
 	}
 
-	$tasks = "SELECT * FROM tasks";
+	$tasks = mysql_query($db, "SELECT * FROM tasks");
+
 ?>
 
 <!DOCTYPE html>
@@ -35,14 +36,15 @@
 			<th>Actie</th>
 		</thead>
 		<tbody>
-		<?php  while ($row = mysqli_query($db, $tasks)) { ?>
+		<?php while ($row = mysqli_fetch_array($tasks)) { ?>	
 			<tr>
 				<td><?php echo $row['id']; ?></td>
 				<td class="task"><?php echo $row['task']; ?></td>
 				<td class="delete">
-				<a href="#">X</a></td>
-			</tr>	
-		<?php  } ?>	
+					<a href="#">X</a>
+				</td>
+			</tr>
+		<?php } ?>		
 		</tbody>
 	</table>
 </body>
