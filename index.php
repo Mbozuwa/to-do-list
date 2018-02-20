@@ -1,5 +1,11 @@
 <?php
-	$db = mysqli_connect('localhost', 'root', '', 'todo');
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$DBname = "todo";
+	include('adodb5/adodb.inc.php');
+	$oDB = ADONewConnection('mysqli');
+	$oDB->Connect($servername, $username, $password, $DBname);
 
 	if (isset($_POST['submit'])) {
 		$task = $_POST['task'];
@@ -10,8 +16,10 @@
 		header('location: index.php'); 
 	}
 
-	$tasks = mysql_query($db, "SELECT * FROM tasks");
+	$tasks = $oDB->GetAll("SELECT * FROM tasks");
 
+	var_dump($tasks);
+	die();
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +44,7 @@
 			<th>Actie</th>
 		</thead>
 		<tbody>
-		<?php while ($row = mysqli_fetch_array($tasks)) { ?>	
+		<?php while ($row = ($tasks)) { ?>	
 			<tr>
 				<td><?php echo $row['id']; ?></td>
 				<td class="task"><?php echo $row['task']; ?></td>
