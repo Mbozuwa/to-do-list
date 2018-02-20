@@ -10,16 +10,12 @@
 	if (isset($_POST['submit'])) {
 		$task = $_POST['task'];
 
-		$allData = "INSERT INTO tasks (task) VALUES ('$task')";
+		$allData = $oDB->GetAll("INSERT INTO tasks (task_id, task, time) VALUES ('?, $task, ?')");
 
-		mysqli_query($db, $allData);
 		header('location: index.php'); 
 	}
 
-	$tasks = $oDB->GetAll("SELECT * FROM tasks");
-
-	var_dump($tasks);
-	die();
+	$getTasks = $oDB->GetAll("SELECT * FROM tasks");
 ?>
 
 <!DOCTYPE html>
@@ -44,10 +40,10 @@
 			<th>Actie</th>
 		</thead>
 		<tbody>
-		<?php while ($row = ($tasks)) { ?>	
+		<?php foreach ($getTasks as $getTask) { ?>	
 			<tr>
-				<td><?php echo $row['id']; ?></td>
-				<td class="task"><?php echo $row['task']; ?></td>
+				<td><?php echo $getTask['task_id']; ?></td>
+				<td class="task"><?php echo $getTask['task']; ?></td>
 				<td class="delete">
 					<a href="#">X</a>
 				</td>
