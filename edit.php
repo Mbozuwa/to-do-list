@@ -1,4 +1,4 @@
-<?php	
+<?php
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
@@ -7,10 +7,8 @@
 	$oDB = ADONewConnection('mysqli');
 	$oDB->Connect($servername, $username, $password, $DBname);
 
-	if (isset($_POST['submit'])) {
-		$task = $_POST['task'];
-
-		$allData = $oDB->GetAll("INSERT INTO tasks (task) VALUES ('$task')");
-
-		header('location: index.php'); 
+		if(isset($_GET['update'])){
+		$id = $_GET['update'];
+		$oDB->execute("UPDATE tasks (task) SET task WHERE task_id = ".$id);
+		header("location: index.php");
 	}
