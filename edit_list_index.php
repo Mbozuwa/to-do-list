@@ -8,12 +8,10 @@
 	$oDB->Connect($servername, $username, $password, $DBname);
 
 		if(isset($_POST['update'])){
-			$listsId = $_POST['lists_id'];
-			$task = $_POST['task'];
-			$time = $_POST['time'];
+			$name = $_POST['name'];
 			$id = $_POST['edit'];
 
-			$oDB->execute("UPDATE tasks SET task='$task',tijd='$tijd',lists_id='$lists_id' WHERE task_id= $id");
+			$oDB->execute("UPDATE lists SET name='$name' WHERE id= $id");
 			header("location: index.php");
 		}
 ?>	
@@ -25,13 +23,11 @@
 </head>
 <body>
 	<div class="header">
-		<h1>Bewerk hier je taak</h1>
+		<h1>Bewerk hier je lijst</h1>
 	</div>
 
 	<form method="POST" action="index.php">
-		<input type="text" name="lists_id" placeholder="Voer hier je list id in.">
-		<input type="text" name="task" placeholder="Voer hier je taak in.">
-		<input type="text" name="time" placeholder="Voer hier je tijd in.">
+		<input type="text" name="lists_id" placeholder="Nieuwe naam">
 		<button type="submit" name="update" value=" value= <?php echo $_GET['edit'];?> ">Bewerken</button>
 	</form>
 </body>

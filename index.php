@@ -9,16 +9,22 @@
 	$oDB->Connect($servername, $username, $password, $DBname);
 
 	if (isset($_POST['submit'])) {
-		$listsId = $_POST['lists_id'];
-		$task = $_POST['task'];
-		$time = $_POST['time'];
+		$list_id = $_POST['id'];
+		$name = $_POST['name'];
 
-		$allData = $oDB->GetAll("INSERT INTO tasks (lists_id, task, time) VALUES ('$listsId', '$task', '$time')");
+		$allData = $oDB->GetAll("INSERT INTO lists (id, name) VALUES ('$list_id', '$name')");
 
 		header('location: index.php'); 
 	}
 
-	$getTasks = $oDB->GetAll("SELECT * FROM tasks");
+		// if (isset($_POST['ASC'])) {
+		// 	$sorting = $oDB->Execute("SELECT * FROM tasks ORDER BY task ASC");
+
+		// } elseif (isset($_POST['DESC'])) {
+		// 	$sorting = $oDB->Execute("SELECT * FROM tasks ORDER BY task DESC");
+		// }
+
+	$getLists = $oDB->GetAll("SELECT * FROM lists");
 ?>
 
 <!DOCTYPE html>
@@ -28,34 +34,30 @@
 </head>
 <body>
 	<div class="header">
-		<h1>To do list </h1>
+		<h1>Lijsten<h1>
 	</div>
-
 	<form method="POST" action="index.php">
-		<input type="text" name="lists_id" placeholder="Voer hier je list id in.">
-		<input type="text" name="task" placeholder="Voer hier je taak in.">
-		<input type="text" name="time" placeholder="Voer hier je tijd in.">
+		<input type="text" name="id" placeholder="Voer hier je lijst id in.">
+		<input type="text" name="name" placeholder="Voer hier je lijst naam in.">
 		<button type="submit" name="submit">Toevoegen</button>
 	</form>
 
 	<table>
-		<thead>
-			<th>Nummer</th>
-			<th>Taak</th>
-			<th>Tijd</th>
-			<th>Actie</th>
-		</thead>
+			<thead>
+				<th>lijst id</th>
+				<th>Naam</a></th>
+				<th></th>
+			</thead>
 		<tbody>
-		<?php foreach ($getTasks as $getTask) { ?>	
+		<?php foreach ($getLists as $getList) { ?>	
 			<tr>
-				<td><?php echo $getTask['task_id']; ?></td>
-				<td class="task"><?php echo $getTask['task']; ?></td>
-				<td class="task"><?php echo $getTask['time']; ?></td>
+				<td class="task"><?php echo $getList['id']; ?></td>
+				<td class="task"><?php echo $getList['name']; ?></td>
 				<td class="edit">
-					<a href="edit_index.php?edit=<?php echo $getTask['task_id']; ?>">bewerken</a>
+					<a href="edit_list_index.php?edit=<?php echo $getList['id']; ?>">bewerken</a>
 				</td>
 				<td class="delete">
-					<a href="index.php?delete=<?php echo $getTask['task_id']; ?>">verwijderen</a>
+					<a href="index.php?remove=<?php echo $getList['id']; ?>">verwijderen</a>
 				</td>
 			</tr>
 		<?php } ?>		

@@ -11,5 +11,9 @@
 	if(isset($_GET['delete'])){
 		$id = $_GET['delete'];
 		$oDB->execute("DELETE FROM tasks WHERE task_id = ".$id);
+		header("location: list_index.php");
+	}elseif (isset($_GET['remove'])) {
+		$id = $_GET['remove'];
+		$oDB->execute("DELETE FROM lists WHERE id = ".$id);
 		header("location: index.php");
 	}
